@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Item from "./Item"
 import { renderPDFInDOM } from "./PdfMaker";
+import InputText from "./InputText"
 
 class EstimateForm extends Component {
   state = {
@@ -86,6 +87,7 @@ class EstimateForm extends Component {
       <React.Fragment>
         <div>Nouveau devis</div>
         <form onSubmit={this.handleSubmit}>
+        <InputText label="ID" name="id" value={this.state.id} onChange={this.handleChange}/>
           <input
             onChange = {evt => this.handleChange(evt, 'id')}
             type="texte"
