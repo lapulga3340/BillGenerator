@@ -116,7 +116,7 @@ class EstimateForm extends Component {
               onItemChange={this.handleItemChange}
             />
           ))}
-          <button onClick={() => renderPDFInDOM(JSON.stringify(this.state))}>
+          <button onClick={() => renderPDFInDOM(this.state)}>
             Générer le devis
           </button>
         </form>
