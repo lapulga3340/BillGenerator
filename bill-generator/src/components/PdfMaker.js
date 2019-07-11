@@ -28,15 +28,15 @@ const MyDocument = (props) =>(
     <Document>
         <Page sier="A4" style={styles.page}>
             <View style={styles.section}>
-                <Text>Devis: {props.text.title}</Text>
-                <Text>n°: {props.text.id}</Text>
-                <Text>Client: {props.text.customerFirstName} {props.text.customerLastName}</Text>
-                <Text>Articles: </Text>
+                <Text>Devis: {props.text.title}</Text><br/>
+                <Text>n°: {props.text.id}</Text><br/>
+                <Text>Client: {props.text.customerFirstName} {props.text.customerLastName}</Text><br/>
+                <Text>Articles: </Text><br/>
                 {Object.keys(props.text.items).map((key, index) => (
                     <Text key={key}>
-                        {props.text.items[key].quantity} &nbsp;
-                        {props.text.items[key].description} &nbsp;
-                        {parseFloat(props.text.items[key].taxe)*100}% &nbsp;
+                        {props.text.items[key].quantity} &nbsp; <br/>
+                        {props.text.items[key].description} &nbsp; <br/>
+                        {parseFloat(props.text.items[key].taxe)*100}% &nbsp; <br/>
                         {props.text.items[key].amount} €
                     </Text>
                 ))}
