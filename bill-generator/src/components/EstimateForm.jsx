@@ -1,19 +1,17 @@
 import React, { Component } from "react";
-import Item from "./Item"
+import Item from "./Item";
 import { renderPDFInDOM } from "./PdfMaker";
-import InputText from "./InputText"
+import InputText from "./InputText";
 
 class EstimateForm extends Component {
   state = {
-      id: '',
-      title: '',
-      customerFirstName: '',
-      customerLastName: '',
-      items: {
+    id: "",
+    title: "",
+    customerFirstName: "",
+    customerLastName: "",
+    items: {}
 
-      }
-
-      /*
+    /*
       items: {
           "12345":{
               id: "345678",
@@ -31,7 +29,6 @@ class EstimateForm extends Component {
           }
       }
       */
-
   };
 
   handleSubmit = evt => {
@@ -39,47 +36,46 @@ class EstimateForm extends Component {
     evt.preventDefault();
     console.log("Généré");
   };
- 
+
   handleChange = (evt, name) => {
-      const value = evt.currentTarget.value
-      console.log(name);
-      this.setState({
-          //To have multiple value we use [] in our object
-          [name] : value 
-      })
-  }
+    const value = evt.currentTarget.value;
+    console.log(name);
+    this.setState({
+      //To have multiple value we use [] in our object
+      [name]: value
+    });
+  };
 
   addItem = () => {
-
     const id = Date.now().toString();
     //Grâce à ... on récupère tout ce que contient this.state.items
-    const items = {...this.state.items};
+    const items = { ...this.state.items };
     console.log(this.items);
     items[id] = {
-        id: id,
-        description: "description",
-        quantity: "1",
-        taxe: 0.2,
-        amount: 0
+      id: id,
+      description: "description",
+      quantity: "1",
+      taxe: 0.2,
+      amount: 0
     };
-    this.setState({items: items})
-  }
+    this.setState({ items: items });
+  };
 
   onItemChange = (evt, item, field) => {
-      console.log(evt.currentTarget.value, item, field);
-  }
+    console.log(evt.currentTarget.value, item, field);
+  };
 
   handleItemChange = (evt, item, field) => {
-      console.log(evt.currentTarget.value, item, field);
-      const value = evt.currentTarget.value;
-      const clonedItem = {...item};
-      clonedItem[field] = value;
-      const clonedItems = {...this.state.items};
-      clonedItems[clonedItem.id] = clonedItem
-      this.setState({
-          items:clonedItems
-      });
-  }
+    console.log(evt.currentTarget.value, item, field);
+    const value = evt.currentTarget.value;
+    const clonedItem = { ...item };
+    clonedItem[field] = value;
+    const clonedItems = { ...this.state.items };
+    clonedItems[clonedItem.id] = clonedItem;
+    this.setState({
+      items: clonedItems
+    });
+  };
 
   render() {
     return (
@@ -87,44 +83,42 @@ class EstimateForm extends Component {
       <React.Fragment>
         <div>Nouveau devis</div>
         <form onSubmit={this.handleSubmit}>
-        <InputText label="ID" name="id" value={this.state.id} onChange={this.handleChange}/>
-          <input
-            onChange = {evt => this.handleChange(evt, 'id')}
-            type="texte"
+          <InputText
+            label="ID"
             name="id"
-            id="id"
-            placeholder="Référence du devis"
-            value= {this.state.id}
-          /><br/>
-           <input
-            onChange = {evt => this.handleChange(evt, 'title')}
-            type="texte"
+            value={this.state.id}
+            onChange={this.handleChange}
+          />
+          <InputText
+            label="title"
             name="title"
-            id="title"
-            placeholder="Titre du devis"
-            value= {this.state.title}
-          /><br/>
-           <input
-            onChange = {evt => this.handleChange(evt, 'customerFirstName')}
-            type="texte"
+            value={this.state.title}
+            onChange={this.handleChange}
+          />
+          <InputText
+            label="Prénom du client"
             name="customerFirstName"
-            id="customerFirstName"
-            placeholder="Prénom"
-            value= {this.state.customerFirstName}
-          /><br/>
-           <input
-            onChange = {evt => this.handleChange(evt, 'customerLastName')}
-            type="texte"
+            value={this.state.customerFirstName}
+            onChange={this.handleChange}
+          />
+          <InputText
+            label="Nom"
             name="customerLastName"
-            id="customerLastName"
-            placeholder="Nom"
-            value= {this.state.customerLastName}
-          /><br/>
+            value={this.state.customerLastName}
+            onChange={this.handleChange}
+          />
+
           <button onClick={this.addItem}>Ajouter une ligne</button>
           {Object.keys(this.state.items).map((itemId, index) => (
-              <Item key={index} item ={this.state.items[itemId]} onItemChange={this.handleItemChange}/>
+            <Item
+              key={index}
+              item={this.state.items[itemId]}
+              onItemChange={this.handleItemChange}
+            />
           ))}
-          <button onClick={()=> renderPDFInDOM(JSON.stringify(this.state))}>Générer le devis</button>
+          <button onClick={() => renderPDFInDOM(JSON.stringify(this.state))}>
+            Générer le devis
+          </button>
         </form>
       </React.Fragment>
     );
